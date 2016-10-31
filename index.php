@@ -24,23 +24,45 @@ echo 'Hello ' . htmlspecialchars($_GET["name"]) . '!';
 	//or multipart.form-data as the HTTP Content-Type in the request
 echo 'Hello ' . htmlspecialchars($_POST["name"]) . '!';
 
-//$_FILES- 
+//$_FILES- an associative array of items uploaded to the current script via
+	//the HTTP POST method. The structure of this array is outlined in 
+	//the POST mestion uploads section
 $uploaddir = '/var/www/uploads/';
 $uploadfile = $uploaddir . basename($_FILES['userfile']['name'])
 echo '<pre>';
 if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)){
-	echo "F
+	echo "File is valid and was successfully uploaded.\n";
+} else {
+	echo "Possible file upload attack!\n";
+}
+echo 'Here is some more debugging info: ';
+print_r($_FILES);
+print "</pre>";
 
-//$_COOKIE- 
+//$_COOKIE- an associative array of variables passed to the current script
+	//via HTTP Cookies
+echo 'Hello ' . htmlspecialchars($_COOKIE["name"]) . '!';
 
-//$_SESSION- 
+//$_SESSION- an associative array containing session variables available to 
+	//the current script 
+//Creating new session
+session_start();
+$_SESSION["newsession"] = $value;
 
-//$_REQUEST- 
+//$_REQUEST- an associative array that by defalut contains the contents of 
+	//$_GET, $_POST, and $_COOKIE
+switch($_SERVER['REQUEST_METHOD'])
+{
+case 'GET': $the_request = &$_GET; break;
+case 'POST': $the_request = &$_POST; break;
+.
+. //Etc.
+.
+default:
+}
 
-//$_ENV- 
-
-
-
-
+//$_ENV- an associative array of variables passed to the current script via 
+	//the environment method
+echo 'My username is ' .$_ENV["USER"] . '!';
 
 ?>
